@@ -82,7 +82,7 @@ export default {
 .userinfo-avatar {
   width: 128rpx;
   height: 128rpx;
-  margin: 20rpx;
+  margin: 40rpx;
   border-radius: 50%;
 }
 

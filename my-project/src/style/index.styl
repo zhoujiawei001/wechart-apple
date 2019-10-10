@@ -1,0 +1,192 @@
+@import "mixin.styl"
+
+html
+body
+#app
+  width 100%
+  height 100%
+  margin 0
+  padding 0
+  box-sizing border-box
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+html
+  font-size 10px
+  font-family: 'PingFangSC-Regular', 'Roboto', "Helvetica Neue", "Helvetica", "STHeiTi", "Microsoft YaHei", "微软雅黑", "Arial", "sans-serif";
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color #000
+h1
+h2
+h3
+h4
+h5
+h6
+ul
+li
+ol
+p
+a
+strong
+  margin 0
+  padding 0
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none
+}
+
+* {
+  box-sizing inherit
+}
+
+.btn {
+  color: $fontColorTheme2;
+  background: #fff;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.btn:active {
+  background-color rgba(0,0,0,.1) !important;
+}
+
+/*1px border*/
+.border-1px {
+  box-shadow: 0 0 1px 1px #ddd inset;
+}
+
+.flex {
+  setPosUseFlexInit(row, space-between, center)
+}
+
+@media only screen and (min-width: 320px) {
+  html {
+    font-size: 9px
+  }
+}
+
+@media only screen and (min-width: 360px) {
+  html {
+    font-size: 10px
+  }
+}
+
+@media only screen and (min-width: 375px) {
+  html {
+    font-size: 10.42px
+  }
+}
+
+@media only screen and (min-width: 400px) {
+  html {
+    font-size: 11.11px
+  }
+}
+
+@media only screen and (min-width: 414px) {
+  html {
+    font-size: 11.50px
+  }
+}
+
+/** 禁止点击加置灰 **/
+.btn-disable
+  opacity: .4
+  pointer-events none
+
+.btn-disable2
+  opacity: .4
+//pointer-events none
+
+.btn-disable3
+  pointer-events none
+/** vue动画：淡入淡出 **/
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+/** 遮罩层样式 **/
+.mask
+  width 100%
+  height 100%
+  position absolute
+  top: 0
+  left 0
+  background rgba(0, 0, 0, .2)
+
+/** 手写谈入淡出 **/
+//@keyframes fadeInOut
+//  0%
+//    opacity 1
+//  25%
+//    opacity 0
+//  50%
+//    opacity 1
+//  75%
+//    opacity 0
+///** 背景颜色转换 **/
+//@keyframes bgcChange
+//  0%
+//    background-color $bdColorTheme
+//  25%
+//    background-color $fontColorTheme
+//  50%
+//    background-color $bdColorTheme
+//  75%
+//    background-color $fontColorTheme
+.learnActive
+  animation bgcChange 1s infinite
+/** 单条border样式设置1px **/
+.scale-1px
+  position relative
+  border none!important
+.scale-1px:after
+  content: ''
+  position absolute
+  left 0
+  bottom 0
+  background #ddd
+  width 100%
+  height 1px
+  -webkit-transform scaleY(0.5)
+  transform scaleY(0.5)
+  -webkit-transform-origin 0 0
+  transform-origin 0 0
+/** 四条边框border样式设置1px **/
+.scale-4x
+  position relative
+  margin-bottom 20px
+  border none!important
+.scale-4px:after
+  content: ''
+  top 0
+  left 0
+  border 1px solid #ddd
+  width 200%
+  height 200%
+  -webkit-transform: scale(0.5)
+  transform: scale(0.5)
+  -webkit-transform-origin: left top
+  transform-origin: left top
+
+/** loading图片在旋转 **/
+//@keyframes loading
+//  0%
+//    transform rotate(0)
+//  100%
+//    transform rotate(360deg)
+
+/** 点击效果背景颜色 **/
+.bgActive
+  background-color $bgActiveColor
