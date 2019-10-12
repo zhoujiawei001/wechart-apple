@@ -1,0 +1,16 @@
+/* components/appDevScene/devScene.wxss */
+.item {
+  display: flex;
+  background-color: #fff;
+  padding: 16rpx;
+  margin-bottom: 24rpx;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+}
+.lf {
+  margin-right: 16rpx;
+}
+.icon {
+  width: 32rpx;
+  height: 32rpx;
+}

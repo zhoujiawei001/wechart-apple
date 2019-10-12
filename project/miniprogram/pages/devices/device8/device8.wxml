@@ -1,0 +1,19 @@
+<scroll-view class="container" scroll-y="{{true}}">
+  <app-banner prop-img="{{imgUrl}}"></app-banner>
+  <view class="normalKey">
+    <view class="on-off">
+      <view class="on">开</view>
+      <view class="off">关</view>
+    </view>
+    <view class="switch">
+      <view class="sw-icon">
+        <image src="../../../images/switch2.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="expandKey">
+    <view class="item" wx:for="{{list}}" wx:key="{{index}}">
+      <view class="item_txt">{{item}}</view>
+    </view>
+  </view>
+</scroll-view>

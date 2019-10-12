@@ -1,12 +1,21 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/timer/timer",
+    "pages/chart/chart",
+    "pages/devices/device7/device7",
+    "pages/devices/device1/device1",
+    "pages/devices/device2/device2",
+    "pages/devices/device6/device6",
+    "pages/devices/device8/device8",
+    "pages/devices/device10/device10",
+    "pages/devices/dev_pt/device7"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarBackgroundColor": "#f2f2f2",
+    "navigationBarTitleText": "遥控器",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"

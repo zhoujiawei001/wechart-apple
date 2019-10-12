@@ -1,0 +1,4 @@
+<view class="banner">
+  <image class="bg-img" src="../../images/background.png"></image>
+  <image class="dev-img" src="{{propImg}}"></image>
+</view>

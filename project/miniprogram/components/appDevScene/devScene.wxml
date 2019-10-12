@@ -1,0 +1,8 @@
+<view class="item" bindtap="execute">
+  <view class="lf">
+    <image class="icon" src="../../images/home.png"></image>
+  </view>
+  <view class="rt">
+    打开电视关闭空调
+  </view>
+</view>

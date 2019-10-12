@@ -1,0 +1,68 @@
+/* components/fadeUp/fadeUp.wxss */
+.box {
+  position: absolute;
+  left: 0;
+  bottom: 150rpx;
+  width: 100%;
+  height: 420rpx;
+}
+.content {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  background-color: #fff;
+  border-radius: 8rpx;
+  z-index: 10;
+}
+.box .item {
+  height: 84rpx;
+  line-height: 84rpx;
+  border-bottom: 1rpx solid #ddd;
+  z-index: 11;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  padding-left: 24rpx;
+}
+.box .item:active {
+  background-color: rgba(0,0,0,.05);
+}
+.box .active {
+  opacity: .4;
+  pointer-events: none;
+}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.05);
+  z-index: 9;
+}
+@keyframes slidedown {
+    from {
+      opacity: 1;
+      bottom: 152rpx;
+    }
+    to {
+      opacity: 0;
+      bottom: 0;
+    }
+}
+.slidedown {
+    /* animation: slidedown 0.3s linear ; */
+    display: none;
+}
+.slideup {
+    animation: slideup 0.3s linear ;
+}
+@keyframes slideup {
+    from {
+      opacity: 0;
+      bottom: -30%;
+    }
+    to {
+      opacity: 1;
+      bottom: 0;
+    }
+}

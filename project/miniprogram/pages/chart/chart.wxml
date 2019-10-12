@@ -1,0 +1,13 @@
+<view class="chart">
+  <view class="btns">
+    <view wx:for="{{list}}" wx:key="{{index}}" class="item {{selectIdx === index? 'active': ''}}" data-idx="{{index}}" bindtap="handleItem">{{item}}</view>
+  </view>
+  <view class="echart_panel">
+    <ec-canvas ec="{{ecLine}}"></ec-canvas>
+    <view class="no_data" hidden="{{isHidden}}">暂无数据</view>
+  </view>
+  <view class="page">
+    <button class="btn" size="mini" bindtap="prev">{{selectIdx?(selectIdx === 1?'上一月':'上一年'):'上一周'}}</button>
+    <button class="btn" size="mini" bindtap="next">{{selectIdx?(selectIdx === 1?'下一月':'下一年'):'下一周'}}</button>
+  </view>
+</view>

@@ -1,3 +1,9 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "dev-item": "../../components/appDevItem/devItem",
+    "dev-scene": "../../components/appDevScene/devScene"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundColorTop": "#e1e1e1",
+  "backgroundColorBottom": "#F2F2F2"
 }

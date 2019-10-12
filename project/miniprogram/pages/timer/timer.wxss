@@ -1,0 +1,59 @@
+.container {
+  padding: 32rpx;
+  height: calc(100% - 484rpx);
+  background-color: #F2F2F2;
+  box-sizing: border-box;
+}
+.time {
+  display: flex;
+  justify-content: space-around;
+}
+.time view {
+  width: 120rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  text-align: center;
+  background-color: #fff;
+  display: inline-block;
+  box-sizing: border-box;
+}
+.time .active {
+  border: 1px solid #007dff;
+}
+.days{
+  margin-top: 24rpx;
+  font-size: 28rpx;
+}
+.days view {
+  height: 84rpx;
+  line-height: 84rpx;
+  border-bottom: 1rpx solid #ddd;
+  position: relative;
+}
+.days view:last-child {
+  border-bottom: none;
+}
+.days .icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 46rpx;
+  transform: translateY(-50%);
+}
+.btn {
+  display: flex;
+  justify-content: center;
+}
+.btn view {
+  width: 180rpx;
+  height: 72rpx;
+  background-color: #fff;
+  border-radius: 42rpx;
+  line-height: 72rpx;
+  text-align: center;
+  font-size: 28rpx;
+  margin-top: 72rpx;
+}
+.btn view:active {
+  background-color: rgba(0, 0, 0, .1)
+}

@@ -1,0 +1,12 @@
+<view class="dev-item">
+  <view class="item-lf" bindtap="goToDevices">
+    <image class="picture" src="../../images/devIcon/{{propItem.rcType}}.png"></image>
+    <view class="info">
+      <text>{{propItem.name}}</text>
+      <text>{{typeObj[propItem.rcType]}}</text>
+    </view>
+  </view>
+  <view class="item-rt" bindtap="switchFn">
+    <image class="sw-icon" src="../../images/switch_on.png"></image>
+  </view>
+</view>

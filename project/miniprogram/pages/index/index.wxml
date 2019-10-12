@@ -1,2 +1,12 @@
-<!--pages/index/index.wxml-->
-<text>pages/index/index.wxml</text>
+<view class="index" style="height: 100%;background-color: #f2f2f2">
+  <view class="banner">
+    <image class="bg_image" src="../../images/background.jpg"></image>
+  </view>
+
+  <view class="container">
+    <view class="scene">
+      <dev-scene wx:for="{{s_list}}" wx:key="{{index}}" prop-idx="{{item}}" style="width: 31.5%"></dev-scene>
+    </view>
+    <dev-item wx:for="{{d_list}}" wx:key="{{index}}" prop-item="{{item}}"></dev-item>
+  </view>
+</view>

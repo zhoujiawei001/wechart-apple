@@ -1,0 +1,31 @@
+<view class="banner">
+  <image class="bg-img" src="../../../images/background.png"></image>
+  <text class="temp">26°c</text>
+  <view class="icons">
+    <image class="img-mode" src="../../../images/icons/mode_r.png"></image>
+    <image class="img-wind" src="../../../images/icons/wind_s0.png"></image>
+    <image class="img-UD" src="../../../images/icons/upDown_u0.png"></image>
+    <image class="img-LR" src="../../../images/icons/leftRight_l0.png"></image>
+  </view>
+</view>
+<view class="container">
+  <view class="part-1">
+    <view class="btn">制冷</view>
+    <view class="btn">自动</view>
+    <view class="btn">扫风关</view>
+    <view class="btn">扫风关</view>
+  </view>
+  <view class="part-2">
+    <view class="btn btn-reduce">-</view>
+    <view class="text-temp">温度</view>
+    <view class="btn btn-plus">＋</view>
+  </view>
+  <view class="part-3">
+    <view class="btn-delay">取消倒计时</view>
+    <view class="btn-power">
+      <image src="../../../images/switch_white.png"></image>
+      <text>电源</text>
+    </view>
+    <view class="btn-delay">倒计时关</view>
+  </view>
+</view>

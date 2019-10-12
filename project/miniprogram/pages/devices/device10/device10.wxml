@@ -1,0 +1,57 @@
+<scroll-view class="container" scroll-y="{{true}}">
+  <!-- 第一部分 -->
+  <view class="part-1">
+    <view class="power">
+      <image src="../../../images/icons/icon-switch.png"></image>
+      <text>电视盒子开关</text>
+    </view>
+    <view class="choose">
+      <image src="../../../images/icons/icon-switch.png"></image>
+      <text>电视机开关</text>
+    </view>
+    <view class="home">
+      <image src="../../../images/icons/icon-choose.png"></image>
+      <text>输入选项</text>
+    </view>
+  </view>
+  <!-- 第二部分 -->
+  <view class="part-2">
+    <view class="voice">
+      <text class="plus">＋</text>
+      <text class="name">音量</text>
+      <text class="reduce">-</text>
+    </view>
+  </view>
+  <!-- 第三部分 -->
+  <view class="part-3">
+    <view class="lf">
+      <view class="mute">
+        <image src="../../../images/icons/icon-home.png"></image>
+      </view>
+      <view class="mute">
+        <image src="../../../images/icons/icon-menu.png"></image>
+      </view>
+    </view>
+    <view class="md">
+      <view class="ok appActive">OK</view>
+      <view class="t-circle circle appActive">○</view>
+      <view class="r-circle circle appActive">○</view>
+      <view class="b-circle circle appActive">○</view>
+      <view class="l-circle circle appActive">○</view>
+    </view>
+    <view class="rt">
+      <view class="mute">
+        <image src="../../../images/icons/icon-mute.png"></image>
+      </view>
+      <view class="mute">
+        <image src="../../../images/icons/icon-back.png"></image>
+      </view>
+    </view>
+  </view>
+  <!-- 第四部分 -->
+  <view class="expandKey">
+    <view class="item" wx:for="{{list}}" wx:key="{{index}}">
+      <view class="item_txt">{{item}}</view>
+    </view>
+  </view>
+</scroll-view>

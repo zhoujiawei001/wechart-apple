@@ -1,0 +1,31 @@
+<view class="delayBox">
+  <view class="content {{aniStyle?'slideup':'slidedown'}}" catchtouchmove="doNoThing">
+    <view class="title">
+      <view class="g-txt">设置倒计时关</view>
+      <view class="s-txt">空调将于{{closeTxt}}关闭</view>
+    </view>
+    <picker-view 
+      indicator-style="height: 38px;" 
+      style="width: clac(100%-128rpx); height: 420rpx; padding:0 52rpx" 
+      value="{{value}}" bindchange="bindChange">
+      <picker-view-column style="margin-right: 24rpx;">
+        <view 
+          wx:for="{{hours}}"
+          wx:key="{{index}}"
+          style="line-height: 38px; text-align: center">{{item}}时</view>
+      </picker-view-column>
+      <picker-view-column style="margin-left: 24rpx;">
+        <view 
+          wx:for="{{min}}"
+          wx:key="{{index}}"
+          style="line-height: 38px;text-align: center">{{item}}分</view>
+      </picker-view-column>
+    </picker-view>
+    <view class="btns">
+      <view class="lf" bindtap="cancel">取消</view>
+      <view class="md"></view>
+      <view class="rt {{value[0] + value[1] !== 0? '':'forbiddenBtn'}}" bindtap="sure">确定</view>
+    </view>
+  </view>
+  <view class="mask" catchtouchmove="doNoThing"></view>
+</view>

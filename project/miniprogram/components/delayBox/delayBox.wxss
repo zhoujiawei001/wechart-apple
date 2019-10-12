@@ -1,0 +1,90 @@
+.delayBox {
+  position: fixed;
+  width: calc(100% - 64rpx);
+  left: 32rpx;
+  right: 32rpx;
+  bottom: 24rpx;
+  height: 420rpx;
+}
+.content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  background-color: #fff;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  border-radius: 16rpx;
+}
+.title {
+  padding: 24rpx 0;
+}
+.title .g-txt {
+  font-size: 32rpx;
+}
+.title .s-txt {
+  color: rgba(0,0,0,.5);
+}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.2);
+  z-index: 9;
+}
+.btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28rpx;
+  padding: 14rpx 76rpx;
+  box-sizing: border-box;
+}
+.btns .lf, .btns .rt {
+  width: 40%;
+  padding: 18rpx 0;
+  text-align: center;
+  /* box-sizing: border-box; */
+}
+.btns .lf:active, .btns .rt:active {
+  background-color: rgba(0,0,0,.05);
+}
+.btns .md {
+  width: 1px;
+  height: 48rpx;
+  background-color: #ddd;
+}
+@keyframes slidedown {
+    from {
+      opacity: 1;
+      bottom: 152rpx;
+    }
+    to {
+      opacity: 0;
+      bottom: 0;
+    }
+}
+.slidedown {
+    /* animation: slidedown 0.3s linear ; */
+    display: none;
+}
+.slideup {
+    animation: slideup 0.3s linear ;
+}
+@keyframes slideup {
+    from {
+      opacity: 0;
+      bottom: -152rpx;
+    }
+    to {
+      opacity: 1;
+      bottom: 0;
+    }
+}
+.forbiddenBtn {
+  opacity: .3;
+  pointer-events: none;
+}

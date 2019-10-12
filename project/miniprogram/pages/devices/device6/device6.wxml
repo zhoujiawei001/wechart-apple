@@ -1,0 +1,23 @@
+
+<scroll-view class="container" scroll-y="{{true}}">
+  <app-banner prop-img="{{imgUrl}}"></app-banner>
+  <view class="normalKey">
+    <view class="power">
+      <view>
+        <image src="../../../images/switch2.png"></image>
+        <text>电源</text>
+      </view>
+    </view>
+    <view class="other">
+      <view class="speed btn"><view class="txt">风速</view></view>
+      <view class="mode btn"><view class="txt">模式</view></view>
+      <view class="timer btn"><view class="txt">定时</view></view>
+      <view class="shake btn"><view class="txt">摇头</view></view>
+    </view>
+  </view>
+  <view class="expandKey">
+    <view class="item" wx:for="{{list}}" wx:key="{{index}}">
+      <view class="item_txt">{{item}}</view>
+    </view>
+  </view>
+</scroll-view>

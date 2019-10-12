@@ -1,0 +1,14 @@
+<!-- 购物车蒙层 -->
+<view class="box" style="height: {{boxList.length * 84 + 'rpx'}}">
+  <view class="content {{aniStyle?'slideup':'slidedown'}}">
+    <view 
+      bindtap="handleItem" 
+      wx:for="{{boxList}}" 
+      wx:key="{{index}}"
+      data-id="{{index}}"
+      class="item {{modeList[index] === index ?'':'active'}}">
+      {{item}}
+    </view>
+  </view>
+  <view class="mask" bindtap="close"></view>
+</view>
