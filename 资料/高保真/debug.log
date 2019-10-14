@@ -1,1 +1,4 @@
 [1009/155940:INFO:exception_record.cc(518)] [QB]Process ID: 16616 Type: 2
+[1012/064355:WARNING:dns_config_service_win.cc(674)] Failed to read DnsConfig.
+[1012/085613:WARNING:dns_config_service_win.cc(674)] Failed to read DnsConfig.
+[1012/165454:INFO:exception_record.cc(518)] [QB]Process ID: 24452 Type: 2

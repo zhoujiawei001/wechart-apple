@@ -11,7 +11,8 @@
   top: 46%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 140rpx;
+  font-size: 180rpx;
+  font-weight: 100;
 }
 .banner .icons {
   position: absolute;
@@ -62,24 +63,15 @@
   border-radius: 72rpx;
   background-color: #fff;
 }
-.part-2 .btn {
-  height: 72rpx;
-  width: 72rpx;
-  border-radius: 100%;
-  border: 1px solid #000;
-  box-sizing: border-box;
-  line-height: 72rpx;
-  text-align: center;
-  font-size: 32rpx;
-}
 .btn-reduce {
   margin-left: 32rpx;
+  width: 96rpx;
+  height: 96rpx;
 }
 .btn-plus {
   margin-right: 32rpx;
-}
-.part-2 .btn:active {
-  background-color: rgba(0,0,0,.1);
+  width: 96rpx;
+  height: 96rpx;
 }
 .part-3 {
   display: flex;
@@ -115,4 +107,8 @@
 }
 .part-3 .btn-power text {
   color:#fff;
+}
+.banned_click {
+  opacity: .5;
+  pointer-events: none;
 }

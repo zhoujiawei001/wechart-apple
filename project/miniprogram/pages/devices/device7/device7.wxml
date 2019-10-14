@@ -1,31 +1,35 @@
 <view class="banner">
   <image class="bg-img" src="../../../images/background.png"></image>
-  <text class="temp">26°c</text>
+  <text class="temp">{{devStatus.temp == 0?'--':devStatus.temp}}°c</text>
   <view class="icons">
-    <image class="img-mode" src="../../../images/icons/mode_r.png"></image>
-    <image class="img-wind" src="../../../images/icons/wind_s0.png"></image>
-    <image class="img-UD" src="../../../images/icons/upDown_u0.png"></image>
-    <image class="img-LR" src="../../../images/icons/leftRight_l0.png"></image>
+    <image class="img-mode" src="../../../images/blackIcon/mode{{devStatus.mode}}.png"></image>
+    <image class="img-wind" src="../../../images/blackIcon/speed{{devStatus.speed}}.png"></image>
+    <image class="img-UD" src="../../../images/blackIcon/swing_ud{{devStatus.windUd}}.png"></image>
+    <image class="img-LR" src="../../../images/blackIcon/swing_lr{{devStatus.windLr}}.png"></image>
   </view>
 </view>
 <view class="container">
-  <view class="part-1">
-    <view class="btn">制冷</view>
-    <view class="btn">自动</view>
-    <view class="btn">扫风关</view>
-    <view class="btn">扫风关</view>
+  <view class="part-1 {{devStatus.power?'': 'banned_click'}}">
+    <view class="btn" bindtap="modeFn">{{modes[devStatus.mode]}}</view>
+    <view class="btn" bindtap="windFn">{{speeds[devStatus.speed]}}</view>
+    <view 
+      class="btn {{devStatus.windUd? '':'banned_click'}}" 
+      bindtap="handleSwingUd">{{devStatus.windUd === 1? '扫风开' : '扫风关'}}</view>
+    <view 
+      class="btn {{devStatus.windLr? '':'banned_click'}}" 
+      bindtap="handleSwingLr">{{devStatus.windLr === 1? '扫风开' : '扫风关'}}</view>
   </view>
-  <view class="part-2">
-    <view class="btn btn-reduce">-</view>
+  <view class="part-2 {{devStatus.power?'': 'banned_click'}}">
+    <image class="btn btn-reduce" bindtap="adjustTemp" data-id="0" src="../../../images/blackIcon/reduce.png">-</image>
     <view class="text-temp">温度</view>
-    <view class="btn btn-plus">＋</view>
+    <image class="btn btn-plus" bindtap="adjustTemp" data-id="1" src="../../../images/blackIcon/plus.png">＋</image>
   </view>
   <view class="part-3">
-    <view class="btn-delay">取消倒计时</view>
-    <view class="btn-power">
+    <view class="btn-delay {{devStatus.power?'': 'banned_click'}}">取消倒计时</view>
+    <view class="btn-power" bindtap="switchFn">
       <image src="../../../images/switch_white.png"></image>
       <text>电源</text>
     </view>
-    <view class="btn-delay">倒计时关</view>
+    <view class="btn-delay {{devStatus.power?'': 'banned_click'}}">倒计时关</view>
   </view>
 </view>

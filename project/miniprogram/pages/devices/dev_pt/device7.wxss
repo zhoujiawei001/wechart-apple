@@ -1,19 +1,19 @@
 /* pages/devices/device7/device7.wxss */
 .banner {
   position: relative;
-  height: 320rpx;
-  line-height: 320rpx;
+  height: 420rpx;
+  line-height: 420rpx;
   width: 100%;
   background-color: #E1E1E1;
   text-align: center;
-  font-size: 200rpx;
+  font-size: 180rpx;
   font-weight: 100;
 }
 .banner .txt {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -56%);
+  transform: translate(-50%, -50%);
 }
 .container{
   padding: 0 32rpx;

@@ -24,7 +24,6 @@ Page({
     isShowDelayBox: false, // 控制倒计时弹出框的变量
     hhmmss: '', // 倒计时 00:00:00
     delayTimer: null, // 倒计时timer
-    devList: [], // 设备列表
     deviceId: '', // 设备ID
     mac: '', // mac地址
     devDetails: {}, // 设备详情
@@ -543,26 +542,6 @@ Page({
       }
     })
   },
-  // 判断扫风公共方法
-  windPub: function (val, param) {
-    switch (val) {
-      case 0:
-        this.setData({
-          ['devStatus.windUd']: 0
-        });
-        break
-      case 1:
-        this.setData({
-          ['devStatus.windUd']: 1
-        });
-        break
-      default:
-        this.setData({
-          ['devStatus.windUd']: 3
-        })
-        break
-    }
-  },
   /**
    * 发送信息给设备
    */
@@ -588,10 +567,8 @@ Page({
           console.log('sendBody_code', res.data.errorCode);
           let $code = res.data.errorCode;
           let msg = res.data.message;
-          if ($code === 100001) {
-            this.toastFn('请添加设备');
-          } else if ($code === 100201) {
-            this.toastFn('设备没有或离线');
+          if ($code !== 0) {
+            this.toastFn(msg);
           }
         },
         fail: err => {

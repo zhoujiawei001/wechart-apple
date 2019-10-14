@@ -57,6 +57,7 @@ App({
         return $timestamp;
       }
     }
+    /**发送信息给设备 */
   },
   onShow: function (options) {
     console.log('app.onshow', options.referrerInfo);
