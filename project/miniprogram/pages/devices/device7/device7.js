@@ -234,16 +234,20 @@ Page({
       }
     })
   },
+  watchBack: function (value) {
+    console.log('全局回调', value);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    app.watch(this.watchBack)
     this.setData({
       deviceId: options.deviceId
+      // deviceId: '807D3A4BE793'
     })
     this.getDevDetails()
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

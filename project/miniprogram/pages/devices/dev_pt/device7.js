@@ -533,7 +533,7 @@ Page({
         } else {
           wx.showToast({
             title: msg,
-            image: '../../images/warn.png'
+            image: '../../../images/warn.png'
           })
         }
       },

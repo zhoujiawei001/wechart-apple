@@ -39,7 +39,9 @@ Page({
       type: 1,
       runtime: 0,
       lifetime: 0,
-      repeatDay: ''
+      repeatDay: '',
+      state: 1,
+      id: 99
     },
     e_params: { // 修改定时任务的参数
       id: '',
