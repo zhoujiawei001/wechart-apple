@@ -28,12 +28,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 48rpx 0 32rpx 0;
 }
 .sw-icon {
   width: 160rpx;
   height: 160rpx;
   background-color: #fff;
-  border-radius: 50%;
+  border-radius: 16rpx;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,6 +43,6 @@
   background-color: rgba(0,0,0,.1);
 }
 .sw-icon image {
-  width: 80rpx;
-  height: 80rpx;
+  width: 104rpx;
+  height: 104rpx;
 }

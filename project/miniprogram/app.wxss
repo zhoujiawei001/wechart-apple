@@ -38,3 +38,7 @@ page {
 .expandKey .item .item_txt:active {
   background-color: rgba(0,0,0,.1);
 }
+.banned_click {
+  opacity: .35;
+  pointer-events: none;
+}

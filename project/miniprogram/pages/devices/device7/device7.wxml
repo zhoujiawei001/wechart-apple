@@ -25,11 +25,18 @@
     <image class="btn btn-plus" bindtap="adjustTemp" data-id="1" src="../../../images/blackIcon/plus.png">＋</image>
   </view>
   <view class="part-3">
-    <view class="btn-delay {{devStatus.power?'': 'banned_click'}}">取消倒计时</view>
+    <view class="btn-delay {{devStatus.power?'': 'banned_click'}}" bindtap="closeDelay">取消倒计时</view>
     <view class="btn-power" bindtap="switchFn">
       <image src="../../../images/switch_white.png"></image>
-      <text>电源</text>
+      <!-- <text>电源</text> -->
     </view>
-    <view class="btn-delay {{devStatus.power?'': 'banned_click'}}">倒计时关</view>
+    <view class="btn-delay {{devStatus.power?'': 'banned_click'}}" bindtap="setDelay">
+      <view>设置倒计时</view>
+      <view class="delay_time" wx:if="{{clickTime > 0}}">
+        <text>{{hh}}</text>
+        <text>:</text>
+        <text>{{mm}}</text>
+      </view>
+    </view>
   </view>
 </view>

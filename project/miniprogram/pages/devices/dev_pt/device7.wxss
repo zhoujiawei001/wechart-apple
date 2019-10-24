@@ -182,7 +182,3 @@
 .active_1 {
   background: radial-gradient(#71c2ff, #3b9ee9);
 }
-.banned_click {
-  opacity: .5;
-  pointer-events: none;
-}

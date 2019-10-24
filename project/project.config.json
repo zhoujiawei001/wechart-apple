@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 7,
 			"list": [
 				{
 					"id": -1,
@@ -57,9 +57,45 @@
 					"scene": null
 				},
 				{
+					"id": 2,
+					"name": "pages/devices/device1/device1",
+					"pathName": "pages/devices/device1/device1",
+					"query": "tid=1&deviceId=20191017110102986&mac=DC4F22529BE4",
+					"scene": null
+				},
+				{
 					"id": -1,
-					"name": "pages/index/index",
-					"pathName": "pages/index/index",
+					"name": "pages/devices/device2/device2",
+					"pathName": "pages/devices/device2/device2",
+					"query": "tid=2&deviceId=20191017100928211&mac=DC4F22529BE4",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/devices/device6/device6",
+					"pathName": "pages/devices/device6/device6",
+					"query": "tid=6&deviceId=20191017142330748&mac=DC4F22529BE4",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/devices/device8/device8",
+					"pathName": "pages/devices/device8/device8",
+					"query": "tid=8&deviceId=20191017144623984&mac=DC4F22529BE4",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/devices/device10/device10",
+					"pathName": "pages/devices/device10/device10",
+					"query": "tid=10&deviceId=20191017153138340&mac=DC4F22529BE4",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/devices/device7/device7",
+					"pathName": "pages/devices/device7/device7",
+					"query": "tid=7&deviceId=2019101716564669&mac=DC4F22529BE4",
 					"scene": null
 				}
 			]

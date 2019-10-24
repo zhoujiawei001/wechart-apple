@@ -1,4 +1,5 @@
 // pages/devices/device1/device1.js
+const app = getApp();
 Page({
 
   /**
@@ -6,14 +7,46 @@ Page({
    */
   data: {
     numArr: [1, 2, 3, 4, 5, 6, 7, 8, 9, '*', 0, '#'],
-    list: [1, 2, 34, 5456454, 76575756]
+    devId: '', // 设备Id
+    rcType: '', // 设备类型
+    funs: {}, // 功能全集
+    stand_key: [], // 标准键
+    extend_key: [], // 扩展键
+    exist_stand_key: [], // 存在的标准键
   },
-
+  /**下发命令 */
+  sendCode: function (e) {
+    let code = e.target.dataset.key;
+    app.sendCode(this.data.devId, code, this.data.rcType)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      devId: options.deviceId,
+      rcType: options.tid
+    })
+    app.getDevDetails(options.deviceId).then(res => {
+      console.log('机顶盒的详情', res);
+      let $funs = res.functions;
+      let $funs_arr = [];
+      for(let key in $funs) {
+        $funs_arr.push($funs[key])
+      }
 
+      let $stand_key = $funs_arr.filter(item => item.stand_key === 1);
+      let $extend_key = $funs_arr.filter(item => item.stand_key === 0);
+      let $exist_stand_key = $stand_key.map(item => {
+        return item.value;
+      })
+      this.setData({
+        funs: $funs,
+        stand_key: $stand_key,
+        extend_key: $extend_key,
+        exist_stand_key: $exist_stand_key
+      })
+    })
   },
 
   /**

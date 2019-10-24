@@ -53,10 +53,38 @@ Page({
     })
   },
   /**
+   * 获取场景列表
+   */
+  getSceneList: function () {
+    wx.request({
+      url: app.globalData.domain + '/wap/v1/deviceScene',
+      header: {
+        'appId': app.globalData.appId,
+        'token': app.globalData.token,
+        'signature': app.getSign(1),
+        'timestamp': app.getSign(0)
+      },
+      data: {
+        macs: app.globalData.macs 
+      },
+      success: res => {
+        console.log('getSceneList', res);
+      },
+      fail: err => {
+        console.log(err);
+      }
+    })
+  },
+  watchBack: function (value) {
+    console.log('index', value);
+  },
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.getDevList();
+    this.getSceneList();
+    app.initEventHandle(this.watchBack)
   },
 
   /**

@@ -67,11 +67,19 @@
   margin-left: 32rpx;
   width: 96rpx;
   height: 96rpx;
+  border-radius: 50%;
+}
+.btn-reduce:active {
+  background-color: rgba(0,0,0,.1);
 }
 .btn-plus {
   margin-right: 32rpx;
   width: 96rpx;
   height: 96rpx;
+  border-radius: 50%;
+}
+.btn-plus:active {
+  background-color: rgba(0,0,0,.1);
 }
 .part-3 {
   display: flex;
@@ -82,11 +90,13 @@
 .part-3 .btn-delay {
   width: 160rpx;
   height: 160rpx;
-  line-height: 160rpx;
-  text-align: center;
   border: 1px solid #fff;
   border-radius: 16rpx;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .part-3 .btn-delay:active {
   background-color: rgba(0,0,0,.1);
@@ -101,14 +111,35 @@
   justify-content: center;
   align-items: center;
 }
+.part-3 .btn-power:active {
+  background-color: rgb(23, 115, 185);
+}
 .part-3 .btn-power image {
-  width: 64rpx;
-  height: 64rpx;
+  width: 104rpx;
+  height: 104rpx;
 }
 .part-3 .btn-power text {
   color:#fff;
 }
-.banned_click {
-  opacity: .5;
-  pointer-events: none;
+.delay_time {
+  color: #007dff;
+}
+.delay_time text:nth-child(2) {
+  margin: 0 2rpx;
+  animation: fadeInOut 2s infinite;
+}
+/** 手写谈入淡出 **/
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
 }

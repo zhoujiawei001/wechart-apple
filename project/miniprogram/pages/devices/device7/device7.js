@@ -4,9 +4,15 @@ Page({
   /**
    * 页面的初始数据
    */
+  clickCounts: 0, // 点击次数
+  listMin: [10, 20, 30],
+  setTime: 0, // 设置的时间s
+  delayTimer: null, // 倒计时定时器
+  delayBodyTimer: null, // 倒计时定时器2
+  clickTimer: null, // 频繁点击定时
   data: {
     deviceId: '',
-    supportMode: [], // 空调所支持的模式
+    supportMode: [0,1,2,3,4], // 空调所支持的模式
     support: {
       speed: [0,1,2,3],
       temperature: [],
@@ -34,7 +40,10 @@ Page({
       repeatDay: ''
     }, // 倒计时关
     minTemp: 16,
-    maxTemp: 30
+    maxTemp: 30,
+    hh: '', // 倒计时显示时间时
+    mm: '', // 倒计时显示时间分
+    clickTime: 0 // 设置的时间在data中的
   },
   /**设置模式 */
   modeFn: function () {
@@ -144,6 +153,213 @@ Page({
     }
     this.sendDataToDev(params);
   },
+  /**设置倒计时 */
+  setDelay: function () {
+    let curTimestamp = Date.parse(new Date()); // 当前时间戳
+    this.setTime += this.listMin[this.clickCounts] * 60;
+    if (this.setTime >= 24 * 3600) { // 延时时间最大不得超过12个小时
+      this.setTime = 24 * 3600;
+    }
+    this.clickCounts++;
+    if (this.clickCounts > 2) {
+      this.clickCounts = 2;
+    }
+    this.setData({
+      hh: this.changeSecondToHHMM(this.setTime, 'h'),
+      mm: this.changeSecondToHHMM(this.setTime, 'm'),
+      clickTime: this.setTime
+    })
+    if (this.delayBodyTimer) {
+      clearTimeout(this.delayBodyTimer);
+      this.delayBodyTimer = null;
+    }
+    if (this.delayTimer) {
+      clearInterval(this.delayTimer);
+      this.delayTimer = null;
+    }
+    this.delayBodyTimer = setTimeout(() => {
+      if (this.data.delayOff.id) {
+        console.log('编辑倒计时关');
+        this.editDelay(this.setTime + curTimestamp / 1000);
+      } else {
+        console.log('创建倒计时关')
+        this.createDelay(this.setTime + curTimestamp / 1000);
+      }
+    }, 3000);
+  },
+  /**关闭倒计时 */
+  closeDelay: function () {
+    clearTimeout(this.clickTimer);
+    this.clickTimer = null;
+    this.clickTimer = setTimeout(() => {
+      wx.request({
+        method: 'POST',
+        url: app.globalData.domain + '/wap/v1/timerEdit',
+        data: {
+          id: this.data.delayOff.id,
+          runtime: 0,
+          lifetime: 0,
+          repeatDay: '',
+          state: 0
+        },
+        header: {
+          'appId': app.globalData.appId,
+          'token': app.globalData.token,
+          'signature': app.getSign(1),
+          'timeStamp': app.getSign(0)
+        },
+        success: res => {
+          console.log('closeDelayOff', res.data.errorCode);
+          if (res.data.errorCode === 0) {
+            clearInterval(this.delayTimer);
+            this.setTime = 0;
+            this.clickCounts = 0;
+            this.setData({
+              ['delayOff.state']: 0,
+              hh: '',
+              mm: '',
+              clickTime: 0
+            })
+          }
+        },
+        fail: err => {
+          console.log(err);
+        }
+      })
+    }, 350)
+  },
+  // 编辑倒计时关
+  editDelay: function (runtime) {
+    wx.request({
+      method: 'POST',
+      url: app.globalData.domain + '/wap/v1/timerEdit',
+      data: {
+        id: this.data.delayOff.id,
+        runtime: runtime,
+        lifetime: 0,
+        repeatDay: '',
+        state: 1
+      },
+      header: {
+        'appId': app.globalData.appId,
+        'token': app.globalData.token,
+        'signature': app.getSign(1),
+        'timeStamp': app.getSign(0)
+      },
+      success: res => {
+        console.log('editDelay', res.data.errorCode);
+        if (res.data.errorCode === 0) {
+          // this.getDevDetails();
+          this.setToOpenTimer(runtime);
+        }
+        setTimeout(() => {
+          this.setData({
+            isShowDelayBox: false
+          })
+        }, 100)
+      },
+      fail: err => {
+        console.log(err);
+      }
+    })
+  },
+  // 创建倒计时关
+  createDelay: function (runtime) {
+    wx.request({
+      method: 'POST',
+      url: app.globalData.domain + '/wap/v1/timerAdd',
+      data: {
+        deviceId: this.data.deviceId,
+        type: 2,
+        runtime: runtime,
+        lifetime: 0,
+        repeatDay: ''
+      },
+      header: {
+        'appId': app.globalData.appId,
+        'token': app.globalData.token,
+        'signature': app.getSign(1),
+        'timeStamp': app.getSign(0)
+      },
+      success: res => {
+        console.log('createDelay', res.data.errorCode);
+        if (res.data.errorCode === 0) {
+          // this.getDevDetails();
+          this.setToOpenTimer(runtime);
+        }
+        setTimeout(() => {
+          this.setData({
+            isShowDelayBox: false
+          })
+        }, 100)
+      },
+      fail: err => {
+        console.log(err);
+      }
+    })
+  },
+  /**
+   * 设定之后直接执行，不用先请求详情接口
+   */
+  setToOpenTimer: function (runtime) {
+    console.log(runtime);
+    this.clickCounts = 0;
+    this.setData({
+      ['delayOff.state']: 1
+    })
+    clearInterval(this.delayTimer);
+    let curTimestamp = Date.parse(new Date());
+    let totalTimestamp = runtime * 1000;
+    this.setData({
+      hh: this.changeSecondToHHMM((totalTimestamp - curTimestamp) / 1000, 'h'),
+      mm: this.changeSecondToHHMM((totalTimestamp - curTimestamp) / 1000, 'm')
+    })
+    this.delayTimer = setInterval(() => {
+      let $curTimestamp = Date.parse(new Date());
+      this.setTime = (totalTimestamp - $curTimestamp) / 1000;
+      this.setData({
+        hh: this.changeSecondToHHMM((totalTimestamp - $curTimestamp) / 1000, 'h'),
+        mm: this.changeSecondToHHMM((totalTimestamp - $curTimestamp) / 1000, 'm'),
+        clickTime: (totalTimestamp - $curTimestamp) / 1000
+      })
+      if ($curTimestamp >= totalTimestamp) {
+        clearInterval(this.delayTimer);
+        this.delayTimer = null;
+        this.setTime = 0;
+        this.clickCounts = 0;
+        this.setData({
+          ['delayOff.state']: 0,
+          hh: '',
+          mm: '',
+          ['devStatus.power']: 0,
+          clickTime: 0
+        })
+      }
+    }, 1000);
+  },
+  /**
+   * 将时间间隔s转化为hh或mm
+   * @param val为'h'转化为hh否则转化为mm
+   */
+  changeSecondToHHMM: function (sec, val) {
+    if (val === 'h') {
+      return this.addZero(Math.floor(sec / 3600));
+    } else {
+      return this.addZero(Math.floor((sec % 3600) / 60));
+    }
+  },
+
+  /**
+   * 补零方法
+   */
+  addZero: function (num) {
+    if (num < 10) {
+      return '0' + num;
+    } else {
+      return '' + num;
+    }
+  },
+
   /**发送消息给设备 */
   sendDataToDev: function (params) {
     // 防止频繁点击
@@ -153,6 +369,12 @@ Page({
     })
     this.data.clickTimer = setTimeout(() => {
       console.log('sendBody', params);
+      /**手机震动 */
+      wx.vibrateLong({
+        success: res => {
+          console.log('震动成功', res);
+        }
+      })
       wx.request({
         method: 'POST',
         url: app.globalData.domain + '/wap/v1/ctrlAc',
@@ -164,7 +386,7 @@ Page({
           'timeStamp': app.getSign(0)
         },
         success: res => {
-          console.log('sendBody_code', res.data.errorCode);
+          console.log('sendBody_code', res);
           let $code = res.data.errorCode;
           let msg = res.data.message;
           if ($code !== 0) {
@@ -222,10 +444,13 @@ Page({
             ['devStatus.windUd']: $res.functions.attributes[$res.state.mode].windUd ? $res.state.windUd : 0
           })
           // this.judgeDelayIsOpen(this.data.delayOff);
+          if (this.data.delayOff.state) {
+            this.setToOpenTimer(this.data.delayOff.runtime);
+          }
         } else {
           wx.showToast({
             title: msg,
-            image: '../../images/warn.png'
+            image: '../../../images/warn.png'
           })
         }
       },
@@ -235,13 +460,13 @@ Page({
     })
   },
   watchBack: function (value) {
-    console.log('全局回调', value);
+    console.log('device7', value);
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.watch(this.watchBack)
+    app.initEventHandle(this.watchBack)
     this.setData({
       deviceId: options.deviceId
       // deviceId: '807D3A4BE793'

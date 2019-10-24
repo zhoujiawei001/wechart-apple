@@ -1,4 +1,5 @@
 // pages/devices/device6/device6.js
+const app = getApp();
 Page({
 
   /**
@@ -6,14 +7,38 @@ Page({
    */
   data: {
     imgUrl: '../../images/devIcon/6.png',
-    list: [12321321, 23423432, 23523523, 643634643]
+    devId: '', // 设备Id
+    rcType: '', // 设备类型
+    funs: {}, // 功能全集
+    keys: []
   },
-
+  /**下发命令 */
+  sendCode: function (e) {
+    console.log(e.target.dataset.key);
+    let code = e.target.dataset.key;
+    app.sendCode(this.data.devId, code, this.data.rcType)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      devId: options.deviceId,
+      rcType: options.tid
+    })
+    app.getDevDetails(options.deviceId).then(res => {
+      console.log('风扇的详情', res);
+      let $funs = res.functions;
+      let $funs_arr = [];
+      for (let key in $funs) {
+        $funs_arr.push($funs[key])
+      }
 
+      this.setData({
+        funs: $funs,
+        keys: $funs_arr.filter(item => item.value !== 'power')
+      })
+    })
   },
 
   /**

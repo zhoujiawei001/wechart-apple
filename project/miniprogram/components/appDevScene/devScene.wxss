@@ -1,16 +1,33 @@
 /* components/appDevScene/devScene.wxss */
 .item {
-  display: flex;
   background-color: #fff;
   padding: 16rpx;
-  margin-bottom: 24rpx;
+  margin-right: 24rpx;
   font-size: 24rpx;
   border-radius: 8rpx;
+  width: 200rpx;
+  display: inline-block;
+  position: relative;
+
 }
 .lf {
   margin-right: 16rpx;
+  position: absolute;
+  top: 16rpx;
+  left: 16rpx;
 }
-.icon {
+.lf .icon {
   width: 32rpx;
   height: 32rpx;
+}
+.rt {
+  width: calc(100% - 48rpx);
+  white-space: normal;
+  float: right;
+  height: 72rpx;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

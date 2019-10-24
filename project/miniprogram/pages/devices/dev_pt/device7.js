@@ -62,7 +62,7 @@ Page({
     todayPower: 0, // 今日用电量
     todayPowerTimer: null, // 今日电量定时任务
     clickTimer: null, // 防止频繁点击
-    propValue: [0,0]
+    propValue: [0,0],
   },
   /**
    * 空调开关

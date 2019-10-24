@@ -4,9 +4,18 @@
   </view>
 
   <view class="container">
-    <view class="scene">
+    <scroll-view scroll-x="true" style="margin-bottom: {{s_list.length > 0? '16rpx' : 0}};">
+      <view style="white-space:nowrap;">
+        <block wx:for="{{s_list}}" wx:key="{{index}}">
+          <!-- <view style="width: 100px; height: 100px; background: red; display: inline-block;margin-right: 16px;"></view> -->
+          <dev-scene prop-idx="{{item}}"></dev-scene>
+        </block>
+      </view>
+    </scroll-view>
+    <!-- <view class="scene">
       <dev-scene wx:for="{{s_list}}" wx:key="{{index}}" prop-idx="{{item}}" style="width: 31.5%"></dev-scene>
-    </view>
+
+    </view> -->
     <dev-item wx:for="{{d_list}}" wx:key="{{index}}" prop-item="{{item}}"></dev-item>
   </view>
 </view>

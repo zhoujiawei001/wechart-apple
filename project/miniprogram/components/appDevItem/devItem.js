@@ -1,4 +1,5 @@
 // components/appDevItem/devItem.js
+const app = getApp();
 Component({
   /**
    * 组件的属性列表
@@ -46,7 +47,14 @@ Component({
       }
     },
     switchFn () {
-      console.log(this.data.propItem);
+      if (this.data.propItem.rcType !== 7) {
+        app.sendCode(this.data.propItem.deviceId, 'power', this.data.propItem.rcType)
+      } else {
+        wx.showToast({
+          title: '敬请期待',
+          image: '../../images/warn.png'
+        })
+      }
     }
   }
 })

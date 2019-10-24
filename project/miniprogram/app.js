@@ -2,6 +2,9 @@
 import md5 from './utils/md5.js'
 App({
   onLaunch: function (options) {
+    this.lockReconnect = false
+    this.limit = 0 // 重连次数
+    this.timer = null // 重连定时器
     console.log('app.onLaunch', options.referrerInfo);
     let $extraData = options.referrerInfo.extraData;
     if (!wx.cloud) {
@@ -30,9 +33,9 @@ App({
     }
     if (JSON.stringify(options.referrerInfo) === '{}') {
       console.log('没有传入参数-onLaunch')
-      this.globalData.appId = '94d3b83bd9f00589acac31520664993e';
-      this.globalData.macs = '68C63AA51271'; // 68C63AA51271, 5CCF7FB6BCEB, 807D3A4BE793
-      this.globalData.token = 'oaudd5Xk70stFxWAXglGEgLrUaHI';
+      this.globalData.appId = 'b39aa9159d02cdfde0cc00ba2c01e0bf'; // 5f81a6fe262695784c4369a5b59d78d0, b39aa9159d02cdfde0cc00ba2c01e0bf
+      this.globalData.macs = '84F3EB9F44AB'; // 2462AB014FCA, DC4F22529BE4, 84F3EB9F44AB
+      this.globalData.token = 'oc4xO5VHIbq-iufQR182L0DLC4DM'; 
       wx.showToast({
         title: '请传入参数',
         image: './images/warn.png'
@@ -57,11 +60,150 @@ App({
         return $timestamp;
       }
     }
-    /**发送信息给设备 */
+    /**断线重连 */
+    this.reconnect = () => {
+      console.log('重连');
+      if (this.lockReconnect) return;
+      this.lockReconnect = true;
+      clearTimeout(this.timer);
+      if (this.limit < 12) {
+        this.timer = setTimeout(() => {
+          this.linkSocket();
+          this.lockReconnect = false;
+        }, 5000);
+        this.limit += 1;
+      }
+    }
+    /**websocket发送信息给设备 */
     this.watch = (method) => {
-      setTimeout(() => {
-        method(123)
-      }, 2000)
+      // setTimeout(() => {
+      //   method(123)
+      // }, 2000)
+    }
+    /**定时预先定义的websocket监听事件 */
+    this.initEventHandle = (method) => {
+      wx.onSocketMessage((res) => {
+        console.log('受到消息', res);
+        if (res.data == 'PONG') {
+          method(res.data);
+          this.heartCheck.reset().start()
+        } else {
+          console.log('处理数据')
+          method(res.data);
+        }
+      })
+      wx.onSocketOpen(() => {
+        console.log('webSocket连接打开')
+        this.heartCheck.reset().start();
+      })
+      wx.onSocketError((res) => {
+        console.log('WebSocket连接打开失败')
+        this.reconnect();
+      })
+      wx.onSocketClose((res) => {
+        console.log('WebSocket 已关闭！')
+        this.reconnect();
+      })
+    }
+    this.initEventHandle();
+    /**连接socKet */
+    this.linkSocket = () => {
+      wx.connectSocket({
+        url: 'wss://cloud.yaokantv.com:19501?uuid=12345678900&macs=["DC4F22529BE4"]',
+        success: () => {
+          console.log('连接成功');
+        }
+      })
+    }
+    this.linkSocket();
+    /**心跳对象 */
+    this.heartCheck = {
+      timeout: 10000,
+      timeoutObj: null,
+      serverTimeoutObj: null,
+      reset: function () {
+        clearTimeout(this.timeoutObj);
+        clearTimeout(this.serverTimeoutObj);
+        return this;
+      },
+      start: function () {
+        this.timeoutObj = setTimeout(() => {
+          console.log("发送ping");
+          wx.sendSocketMessage({
+            data: "PING",
+            // success(){
+            //  console.log("发送ping成功");
+            // }
+          });
+          this.serverTimeoutObj = setTimeout(() => {
+            wx.closeSocket();
+          }, this.timeout);
+        }, this.timeout);
+      }
+    }
+    /**获取设备详情 */
+    this.getDevDetails = (devId) => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          url: this.globalData.domain + '/wap/v1/remote',
+          data: {
+            deviceId: devId
+          },
+          header: {
+            'appId': this.globalData.appId,
+            'token': this.globalData.token,
+            'signature': this.getSign(1),
+            'timeStamp': this.getSign(0)
+          },
+          success: res => {
+            console.log('g-DevDetails', res);
+            let code = res.data.errorCode;
+            let msg = res.data.message;
+            if (code === 0) {
+              resolve(res.data.data);
+            } else {
+              console.log('234234324')
+              wx.showToast({
+                title: msg,
+                image: '../../../images/warn.png'
+              })
+            }
+          },
+          fail: err => {
+            console.log(err);
+          }
+        })
+      })
+    }
+    /**http发送消息给设备 */
+    this.sendCode = (devId, code, rcType) => {
+      /**手机震动 */
+      wx.vibrateLong({
+        success: res => {
+          console.log('震动成功', res);
+        }
+      })
+
+      let params = {
+        deviceId: devId,
+        cmdName: code,
+        rcType: rcType
+      }
+      console.log('sendCode_params', params);
+      wx.request({
+        method: 'POST',
+        url: this.globalData.domain + '/wap/v1/ctrl',
+        data: params,
+        header: {
+          'appId': this.globalData.appId,
+          'token': this.globalData.token,
+          'signature': this.getSign(1),
+          'timeStamp': this.getSign(0)
+        },
+        success: res => {
+          console.log('sendCode_result', res);
+        }
+      })
     }
   },
   onShow: function (options) {
