@@ -123,6 +123,7 @@
 }
 .delay_time {
   color: #007dff;
+  font-weight: bold;
 }
 .delay_time text:nth-child(2) {
   margin: 0 2rpx;

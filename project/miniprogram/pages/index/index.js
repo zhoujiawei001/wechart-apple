@@ -1,13 +1,15 @@
 // pages/index/index.js
 const app = getApp();
 Page({
-
+  list: [],
   /**
    * 页面的初始数据
    */
   data: {
-    d_list: [],
-    s_list: [1,2,3]
+    d_list: [], // 设备列表
+    s_list: [], // 场景列表
+    w_list: [], // websocket中的设备列表
+    w_obj: [], // websocket中的某个设备返回对象
   },
   /**
    * 获取设备列表
@@ -31,9 +33,22 @@ Page({
         wx.stopPullDownRefresh();
         if (code === 0) {
           if (res.data.data.length > 0) {
-            this.setData({
-              d_list: res.data.data
+            console.warn('我是老二');
+            let list = res.data.data;
+            let bothwayList = list.filter(item => item.rcType === 7);
+            let rid_arr = bothwayList.map(item => {
+              return item.rid
             })
+            this.setData({
+              d_list: list
+            })
+            app.globalData.devList = list;
+            app.globalData.bothwayDevRidArr = JSON.stringify(rid_arr);
+            console.log('rid_arr', rid_arr);
+            // 建立websocket连接 如果没有双向通道的就不需要连接
+            if (rid_arr.length > 0) {
+              app.linkSocket();
+            }
           } else {
             wx.showToast({
               title: '请添加设备',
@@ -69,6 +84,9 @@ Page({
       },
       success: res => {
         console.log('getSceneList', res);
+        this.setData({
+          s_list: res.data.data
+        })
       },
       fail: err => {
         console.log(err);
@@ -77,6 +95,35 @@ Page({
   },
   watchBack: function (value) {
     console.log('index', value);
+    if (JSON.parse(value).list) {
+      JSON.parse(value).list.forEach(item => {
+        this.mergeList(item)
+      })
+    } else {
+      console.log(JSON.parse(value).data);
+      this.setData({
+        w_obj: JSON.parse(value).data
+      })
+      this.mergeList(JSON.parse(value).data);
+    }
+  },
+  /**
+   * 合并设备列表
+   */
+  mergeList: function (obj) {
+    console.log('obj', obj);
+    this.list = this.data.d_list.map(item => {
+      if (item.rid == obj.rc_id) {
+        item.state.power = obj.power;
+        return item;
+      } else {
+        return item;
+      }
+    })
+    this.setData({
+      d_list: this.list
+    })
+    app.globalData.devList = this.list;
   },
   /**
    * 生命周期函数--监听页面加载
@@ -84,7 +131,6 @@ Page({
   onLoad: function (options) {
     this.getDevList();
     this.getSceneList();
-    app.initEventHandle(this.watchBack)
   },
 
   /**
@@ -98,7 +144,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    console.log('onShow-index');
+    app.initEventHandle(this.watchBack)
+    this.setData({
+      d_list: app.globalData.devList
+    })
   },
 
   /**
@@ -120,7 +170,8 @@ Page({
    */
   onPullDownRefresh: function () {
     console.log('刷新了');
-    this.getDevList()
+    this.getDevList();
+    this.getSceneList();
   },
 
   /**

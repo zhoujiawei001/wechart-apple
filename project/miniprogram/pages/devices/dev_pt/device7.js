@@ -6,6 +6,7 @@ Page({
   /**
    * 页面的初始数据
    */
+  list: [], // 设备列表
   data: {
     devName: '空调', // 设备名称
     support: { // 各个模式下所支持的空调功能
@@ -63,6 +64,8 @@ Page({
     todayPowerTimer: null, // 今日电量定时任务
     clickTimer: null, // 防止频繁点击
     propValue: [0,0],
+    be_rc_type: '',
+    rc_id: '',
   },
   /**
    * 空调开关
@@ -503,7 +506,6 @@ Page({
       },
       success: res => {
         console.log('getDevDetails', res);
-        wx.stopPullDownRefresh();
         let code = res.data.errorCode;
         let msg = res.data.message;
         let $res = res.data.data;
@@ -530,6 +532,21 @@ Page({
             ['devStatus.windUd']: $res.functions.attributes[$res.state.mode].windUd ? $res.state.windUd : 0
           })
           this.judgeDelayIsOpen(this.data.delayOff);
+
+          // 下发单次websocket接口,获取单个设备的状态
+          let j_obj = {
+            type: 4,
+            be_rc_type: this.data.be_rc_type,
+            mac: this.data.mac,
+            rc_id: this.data.rc_id
+          }
+          console.log('下发单次websocket接口', j_obj);
+          wx.sendSocketMessage({
+            data: JSON.stringify(j_obj),
+            success: res => {
+              console.log('sendSocketMessage', res);
+            }
+          })
         } else {
           wx.showToast({
             title: msg,
@@ -654,10 +671,44 @@ Page({
       image: '../../../images/warn.png'
     })
   },
+
+  /**
+   * 合并设备列表
+   */
+  mergeList: function (obj) {
+    console.log('obj', obj);
+    this.setData({
+      ['devStatus.power']: obj.power * 1,
+      ['devStatus.mode']: obj.mode * 1,
+      ['devStatus.speed']: obj.speed * 1,
+      ['devStatus.temp']: obj.temp * 1,
+      ['devStatus.windLr']: obj.windLr * 1,
+      ['devStatus.windUd']: obj.windUd * 1,
+      ['devStatus.independentWind']: obj.independentWind * 1
+    })
+    this.list = app.globalData.devList.map(item => {
+      if (item.rid == obj.rc_id) {
+        item.state.power = obj.power;
+        return item;
+      } else {
+        return item;
+      }
+    })
+    console.log('list', this.list);
+    app.globalData.devList = this.list;
+  },
+  watchBack: function (value) {
+    console.log('device7', value);
+    this.mergeList(JSON.parse(value).data);
+  },
   onLoad: function (options) {
+    app.initEventHandle(this.watchBack)
+    console.log('options', options);
     this.setData({
       deviceId: options.deviceId,
-      mac: options.mac
+      be_rc_type: options.tid,
+      mac: options.mac,
+      rc_id: options.rid
     })
     /**进入页面获取的第一手数据 */
     this.getDevDetails();
@@ -709,10 +760,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    console.log('你拉了嘛？');
-    this.getDevDetails();
-    this.getCurPower();
-    this.getTodayBattery();
+    // console.log('你拉了嘛？');
+    // this.getDevDetails();
+    // this.getCurPower();
+    // this.getTodayBattery();
   },
 
   /**

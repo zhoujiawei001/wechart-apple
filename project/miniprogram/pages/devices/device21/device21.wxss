@@ -1,0 +1,38 @@
+/* pages/devices/device21/device21.wxss */
+.container {
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f2f2f2;
+}
+.stand_key {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 72rpx 0 24rpx 0;
+}
+.stand_key .on_off {
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+  margin-bottom: 48rpx;
+}
+.on, .off {
+  font-size: 32rpx;
+}
+.stand_key .power, .on, .off {
+  width: 160rpx;
+  height: 160rpx;
+  background-color: #fff;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.power:active,.on:active,.off:active {
+  background-color: rgba(0,0,0,.1);
+}
+.stand_key .power .switch {
+  width: 104rpx;
+  height: 104rpx;
+}

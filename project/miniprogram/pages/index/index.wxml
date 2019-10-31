@@ -8,7 +8,7 @@
       <view style="white-space:nowrap;">
         <block wx:for="{{s_list}}" wx:key="{{index}}">
           <!-- <view style="width: 100px; height: 100px; background: red; display: inline-block;margin-right: 16px;"></view> -->
-          <dev-scene prop-idx="{{item}}"></dev-scene>
+          <dev-scene prop-item="{{item}}"></dev-scene>
         </block>
       </view>
     </scroll-view>

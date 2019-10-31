@@ -12,13 +12,17 @@ Page({
     funs: {}, // 功能全集
     stand_key: ['power', 'tv_power', 'signal', 'vol+', 'vol-', 'boot', 'menu', 'mute', 'back', 'up', 'down', 'left', 'right', 'ok'], // 标准键白名单
     extend_key: [], // 扩展键
-    exist_stand_key: [], // 存在的标准键
   },
 
   /**下发命令 */
   sendCode: function (e) {
     let code = e.target.dataset.key;
-    app.sendCode(this.data.devId, code, this.data.rcType)
+    let params = {
+      deviceId: this.data.devId,
+      cmdName: code,
+      rcType: this.data.rcType
+    }
+    app.sendCode(params, 'ctrl')
   },
   /**
    * 生命周期函数--监听页面加载

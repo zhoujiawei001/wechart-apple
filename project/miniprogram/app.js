@@ -29,13 +29,19 @@ App({
       signature: '',
       timeStamp: '',
       delayOn: {},
-      deviceId: ''
+      deviceId: '',
+      macArr: [],
+      devList: [], // 设备列表
+      bothwayDevRidArr: '', // 有双向通道的设备rc_id（暂时只有空调）
+      isLinkSocket: 0, // 是否连接websocket 0-未连接， 1-已连接
     }
     if (JSON.stringify(options.referrerInfo) === '{}') {
       console.log('没有传入参数-onLaunch')
-      this.globalData.appId = 'b39aa9159d02cdfde0cc00ba2c01e0bf'; // 5f81a6fe262695784c4369a5b59d78d0, b39aa9159d02cdfde0cc00ba2c01e0bf
-      this.globalData.macs = '84F3EB9F44AB'; // 2462AB014FCA, DC4F22529BE4, 84F3EB9F44AB
-      this.globalData.token = 'oc4xO5VHIbq-iufQR182L0DLC4DM'; 
+      this.globalData.appId = '5f81a6fe262695784c4369a5b59d78d0'; // 5f81a6fe262695784c4369a5b59d78d0, b39aa9159d02cdfde0cc00ba2c01e0bf
+      this.globalData.macs = '84f3eb30f05d,,'; // 2462AB014FCA, DC4F22529BE4, 807D3A4BE4C8
+      this.globalData.token = 'oc4xO5VHIbq-iufQR182L0DLC4DM';
+      this.globalData.macArr = JSON.stringify(this.globalData.macs.split(','));
+      console.log('macArr', this.globalData.macArr);
       wx.showToast({
         title: '请传入参数',
         image: './images/warn.png'
@@ -45,6 +51,7 @@ App({
       this.globalData.appId = $extraData.appId;
       this.globalData.macs = $extraData.macs;
       this.globalData.token = $extraData.token;
+      this.globalData.macArr = JSON.stringify($extraData.macs.split(','))
     }
     /**
    * 通过md5处理获取sign
@@ -59,6 +66,10 @@ App({
       } else {
         return $timestamp;
       }
+    }
+    /**获取当前时间戳 */
+    this.getCurTimestamp = () => {
+      return new Date().getTime();
     }
     /**断线重连 */
     this.reconnect = () => {
@@ -82,10 +93,10 @@ App({
     }
     /**定时预先定义的websocket监听事件 */
     this.initEventHandle = (method) => {
+      console.warn('我是老大');
       wx.onSocketMessage((res) => {
-        console.log('受到消息', res);
+        console.log('收到消息', res);
         if (res.data == 'PONG') {
-          method(res.data);
           this.heartCheck.reset().start()
         } else {
           console.log('处理数据')
@@ -105,20 +116,21 @@ App({
         this.reconnect();
       })
     }
-    this.initEventHandle();
     /**连接socKet */
     this.linkSocket = () => {
+      console.warn('我是老三');
+      wx.closeSocket();
       wx.connectSocket({
-        url: 'wss://cloud.yaokantv.com:19501?uuid=12345678900&macs=["DC4F22529BE4"]',
+        url: `wss://cloud.yaokantv.com:19501?uuid=${this.getCurTimestamp()}&macs=${this.globalData.macArr}&extras=${this.globalData.bothwayDevRidArr}`,
         success: () => {
-          console.log('连接成功');
+          console.log('webSocket连接成功');
         }
       })
     }
-    this.linkSocket();
+    // this.linkSocket();
     /**心跳对象 */
     this.heartCheck = {
-      timeout: 10000,
+      timeout: 30000,
       timeoutObj: null,
       serverTimeoutObj: null,
       reset: function () {
@@ -176,23 +188,17 @@ App({
       })
     }
     /**http发送消息给设备 */
-    this.sendCode = (devId, code, rcType) => {
+    this.sendCode = (params, url) => {
       /**手机震动 */
       wx.vibrateLong({
         success: res => {
           console.log('震动成功', res);
         }
       })
-
-      let params = {
-        deviceId: devId,
-        cmdName: code,
-        rcType: rcType
-      }
       console.log('sendCode_params', params);
       wx.request({
         method: 'POST',
-        url: this.globalData.domain + '/wap/v1/ctrl',
+        url: this.globalData.domain + '/wap/v1/' + url,
         data: params,
         header: {
           'appId': this.globalData.appId,
@@ -202,6 +208,16 @@ App({
         },
         success: res => {
           console.log('sendCode_result', res);
+          let code = res.data.errorCode;
+          let msg = res.data.message;
+          if (code === 0) {
+            console.log('控制成功了');
+          } else {
+            wx.showToast({
+              title: msg,
+              image: '../../images/warn.png'
+            })
+          }
         }
       })
     }
@@ -223,6 +239,7 @@ App({
       this.globalData.appId = $extraData.appId;
       this.globalData.macs = $extraData.macs;
       this.globalData.token = $extraData.token;
+      this.globalData.macArr = JSON.stringify($extraData.macs.split(','));
     }
   }
 })

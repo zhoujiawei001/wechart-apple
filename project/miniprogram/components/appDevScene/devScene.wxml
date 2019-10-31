@@ -3,7 +3,7 @@
     <image class="icon" src="../../images/home.png"></image>
   </view>
   <view class="rt">
-    打开电盛大范德萨分啊手动阀示范点大事发生发射点
+    {{propItem.name}}
     <!-- <text>打开电视机关闭空调</text> -->
   </view>
 </view>

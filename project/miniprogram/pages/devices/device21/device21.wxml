@@ -1,0 +1,35 @@
+<view class="container">
+  <!-- 头部banner -->
+  <app-banner prop-img="{{imgUrl}}"></app-banner>
+  <!-- 标准键 -->
+  <view class="stand_key">
+    <block wx:if="{{rcType == 23}}">
+      <view class="on_off">
+        <view class="power" bindtap="sendCode" data-key="{{stand_key[0]}}">
+          <image data-key="{{stand_key[0]}}" class="switch" src="../../../images/icons/23_open.png"></image>
+        </view>
+        <view class="power" bindtap="sendCode" data-key="{{stand_key[1]}}">
+          <image data-key="{{stand_key[1]}}" class="switch" src="../../../images/icons/23_close.png"></image>
+        </view>
+      </view>
+      <view class="power" bindtap="sendCode" data-key="{{stand_key[2]}}">
+        <image class="switch" src="../../../images/icons/23_pause.png" data-key="{{stand_key[2]}}"></image>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="on_off">
+        <text class="on" bindtap="sendCode" data-key="{{stand_key[0]}}">开</text>
+        <text class="off" bindtap="sendCode" data-key="{{stand_key[1]}}">关</text>
+      </view>
+      <view class="power" bindtap="sendCode" data-key="{{stand_key[2]}}">
+        <image class="switch" src="../../../images/switch2.png" data-key="{{stand_key[2]}}"></image>
+      </view>
+    </block>
+  </view>
+  <!-- 扩展键 -->
+  <view class="expandKey">
+    <view class="item" wx:for="{{extend_key}}" wx:key="{{index}}">
+      <view class="item_txt" bindtap="sendCode" data-key="{{item.value}}">{{item.name}}</view>
+    </view>
+  </view>
+</view>

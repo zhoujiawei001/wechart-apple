@@ -6,7 +6,7 @@
       <text>{{typeObj[propItem.rcType]}}</text>
     </view>
   </view>
-  <view class="item-rt" bindtap="switchFn">
-    <image class="sw-icon" src="../../images/switch_on.png"></image>
+  <view class="item-rt" bindtap="switchFn" hidden="{{propItem.rcType !== 7}}">
+    <image class="sw-icon" src="../../images/switch_{{propItem.state.power || 0}}.png"></image>
   </view>
 </view>

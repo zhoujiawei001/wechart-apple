@@ -1,10 +1,11 @@
 // components/appDevScene/devScene.js
+const app = getApp();
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    propIdx: String
+    propItem: Object
   },
 
   /**
@@ -19,7 +20,11 @@ Component({
    */
   methods: {
     execute: function () {
-      console.log(this.data.propIdx);
+      console.log(this.data.propItem);
+      let params = {
+        sceneId: this.data.propItem.id
+      }
+      app.sendCode(params, 'sceneCtrl');
     }
   }
 })

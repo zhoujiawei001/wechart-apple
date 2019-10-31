@@ -4,6 +4,7 @@ Page({
   /**
    * 页面的初始数据
    */
+  list: [], // 设备列表
   clickCounts: 0, // 点击次数
   listMin: [10, 20, 30],
   setTime: 0, // 设置的时间s
@@ -43,7 +44,10 @@ Page({
     maxTemp: 30,
     hh: '', // 倒计时显示时间时
     mm: '', // 倒计时显示时间分
-    clickTime: 0 // 设置的时间在data中的
+    clickTime: 0, // 设置的时间在data中的
+    be_rc_type: '',
+    mac: '',
+    rc_id: ''
   },
   /**设置模式 */
   modeFn: function () {
@@ -249,7 +253,6 @@ Page({
       success: res => {
         console.log('editDelay', res.data.errorCode);
         if (res.data.errorCode === 0) {
-          // this.getDevDetails();
           this.setToOpenTimer(runtime);
         }
         setTimeout(() => {
@@ -284,7 +287,6 @@ Page({
       success: res => {
         console.log('createDelay', res.data.errorCode);
         if (res.data.errorCode === 0) {
-          // this.getDevDetails();
           this.setToOpenTimer(runtime);
         }
         setTimeout(() => {
@@ -363,11 +365,9 @@ Page({
   /**发送消息给设备 */
   sendDataToDev: function (params) {
     // 防止频繁点击
-    clearTimeout(this.data.clickTimer);
-    this.setData({
-      clickTimer: null
-    })
-    this.data.clickTimer = setTimeout(() => {
+    clearTimeout(this.clickTimer);
+    this.clickTimer = null;
+    this.clickTimer = setTimeout(() => {
       console.log('sendBody', params);
       /**手机震动 */
       wx.vibrateLong({
@@ -447,6 +447,20 @@ Page({
           if (this.data.delayOff.state) {
             this.setToOpenTimer(this.data.delayOff.runtime);
           }
+          // 下发单次websocket接口,获取单个设备的状态
+          let j_obj = {
+            type: 4,
+            be_rc_type: this.data.be_rc_type,
+            mac: this.data.mac,
+            rc_id: this.data.rc_id
+          }
+          console.log('下发单次websocket接口', j_obj);
+          wx.sendSocketMessage({
+            data: JSON.stringify(j_obj),
+            success: res => {
+              console.log('sendSocketMessage', res);
+            }
+          })
         } else {
           wx.showToast({
             title: msg,
@@ -459,17 +473,46 @@ Page({
       }
     })
   },
+  /**
+   * 合并设备列表
+   */
+  mergeList: function (obj) {
+    console.log('obj', obj);
+    this.setData({
+      ['devStatus.power']: obj.power * 1,
+      ['devStatus.mode']: obj.mode * 1,
+      ['devStatus.speed']: obj.speed * 1,
+      ['devStatus.temp']: obj.temp * 1,
+      ['devStatus.windLr']: obj.windLr * 1,
+      ['devStatus.windUd']: obj.windUd * 1,
+      ['devStatus.independentWind']: obj.independentWind * 1
+    })
+    this.list = app.globalData.devList.map(item => {
+      if (item.rid == obj.rc_id) {
+        item.state.power = obj.power;
+        return item;
+      } else {
+        return item;
+      }
+    })
+    console.log('list', this.list);
+    app.globalData.devList = this.list;
+  },
   watchBack: function (value) {
     console.log('device7', value);
+    this.mergeList(JSON.parse(value).data);
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     app.initEventHandle(this.watchBack)
+    console.log('options', options);
     this.setData({
-      deviceId: options.deviceId
-      // deviceId: '807D3A4BE793'
+      deviceId: options.deviceId,
+      be_rc_type: options.tid,
+      mac: options.mac,
+      rc_id: options.rid
     })
     this.getDevDetails()
   },
