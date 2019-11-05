@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgUrl: '../../images/devIcon_blue/21_0.png',
+    imgUrl: '../../images/devIcon/21.png',
     devId: '', // 设备Id
     rcType: '', // 设备类型
     funs: {}, // 功能全集
@@ -18,29 +18,29 @@ Page({
   sendCode: function (e) {
     console.log(e.target.dataset.key);
     let code = e.target.dataset.key;
-    if (code === this.data.stand_key[0]) {
-      this.setData({
-        imgUrl: `../../images/devIcon_blue/${this.data.rcType}_1.png`,
-        status: 1,
-      })
-    } else if (code === this.data.stand_key[1]) {
-      this.setData({
-        imgUrl: `../../images/devIcon_blue/${this.data.rcType}_0.png`,
-        status: 0,
-      })
-    } else if (code === this.data.stand_key[2]) {
-      if (this.data.status) {
-        this.setData({
-          imgUrl: `../../images/devIcon_blue/${this.data.rcType}_0.png`,
-          status: 0,
-        })
-      } else {
-        this.setData({
-          imgUrl: `../../images/devIcon_blue/${this.data.rcType}_1.png`,
-          status: 1,
-        })
-      }
-    }
+    // if (code === this.data.stand_key[0]) {
+    //   this.setData({
+    //     imgUrl: `../../images/devIcon_blue/${this.data.rcType}_1.png`,
+    //     status: 1,
+    //   })
+    // } else if (code === this.data.stand_key[1]) {
+    //   this.setData({
+    //     imgUrl: `../../images/devIcon_blue/${this.data.rcType}_0.png`,
+    //     status: 0,
+    //   })
+    // } else if (code === this.data.stand_key[2]) {
+    //   if (this.data.status) {
+    //     this.setData({
+    //       imgUrl: `../../images/devIcon_blue/${this.data.rcType}_0.png`,
+    //       status: 0,
+    //     })
+    //   } else {
+    //     this.setData({
+    //       imgUrl: `../../images/devIcon_blue/${this.data.rcType}_1.png`,
+    //       status: 1,
+    //     })
+    //   }
+    // }
     let params = {
       deviceId: this.data.devId,
       cmdName: code,
@@ -61,7 +61,7 @@ Page({
     this.setData({
       devId: options.deviceId,
       rcType: options.tid,
-      imgUrl: `../../images/devIcon_blue/${options.tid}_0.png`
+      imgUrl: `../../images/devIcon/${options.tid}.png`
     })
     app.getDevDetails(options.deviceId).then(res => {
       console.log('开关的详情', res);

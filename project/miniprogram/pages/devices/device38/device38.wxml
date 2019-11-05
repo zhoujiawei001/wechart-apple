@@ -1,0 +1,33 @@
+<view class="container">
+  <!-- 头部banner -->
+  <app-banner prop-img="{{imgUrl}}"></app-banner>
+  <!-- 标准键 -->
+  <view class="stand_key">
+    <view class="winds">
+      <view 
+        class="item"
+        wx:for="{{list1}}" 
+        wx:key="{{index}}" 
+        data-key="{{item.value}}">{{item.text}}</view>
+    </view>
+    <view class="light">
+      <view class="img">
+        <image src="../../../images/icons/light.png"></image>
+      </view>
+    </view>
+    <view class="hours">
+      <view 
+        class="item"
+        wx:for="{{list2}}" 
+        wx:key="{{index}}" 
+        data-key="{{item.value}}">{{item.text}}</view>
+    </view>
+  </view>
+  <!-- 扩展键 -->
+  <view class="expandKey">
+    <view class="item" wx:for="{{extend_key}}" wx:key="{{index}}">
+      <view class="item_txt" bindtap="sendCode" data-key="{{item.value}}">{{item.name}}</view>
+    </view>
+  </view>
+</view>
+

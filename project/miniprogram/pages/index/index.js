@@ -56,6 +56,10 @@ Page({
             })
           }
         } else {
+          let list = res.data.data;
+          this.setData({
+            d_list: list
+          })
           wx.showToast({
             title: msg,
             image: '../../images/warn.png'

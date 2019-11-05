@@ -29,7 +29,8 @@ Page({
   onLoad: function (options) {
     this.setData({
       devId: options.deviceId,
-      rcType: options.tid
+      rcType: options.tid,
+      imgUrl: `../../images/devIcon/${options.tid}.png`
     })
     app.getDevDetails(options.deviceId).then(res => {
       console.log('风扇的详情', res);

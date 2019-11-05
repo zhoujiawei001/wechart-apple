@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "app-banner": "../../components/appBanner/appBanner"
+  },
+  "navigationBarBackgroundColor": "#f2f2f2",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "晾衣架·遥控器",
+  "backgroundColor": "#eeeeee",
+  "backgroundTextStyle": "light"
+}

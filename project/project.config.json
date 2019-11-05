@@ -40,6 +40,10 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 7,
 			"list": [
@@ -96,6 +100,12 @@
 					"name": "pages/devices/device7/device7",
 					"pathName": "pages/devices/device7/device7",
 					"query": "tid=7&deviceId=2019101716564669&mac=DC4F22529BE4",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/devices/device38/device38",
+					"pathName": "pages/devices/device38/device38",
 					"scene": null
 				}
 			]

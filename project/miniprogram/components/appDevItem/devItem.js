@@ -21,10 +21,15 @@ Component({
       10: '电视盒子',
       21: '开关',
       22: '插座',
-      23: '窗帘'
+      23: '窗帘',
+      24: '晾衣架',
+      25: '灯控器',
+      38: '风扇灯',
+      42: '风扇'
     },
-    include_dev: [1,2,6,7,8,10,21,22,23], // 已开发设备遥控器类型
-    samePageTypeId: [21,23] // 相同
+    include_dev: [1,2,6,7,8,10,21,22,23,24,25,38,42], // 已开发设备遥控器类型
+    samePageTypeId: [21,22,23,25], // 相同
+    samePageTypeId2: [6, 8, 42]
   },
 
   /**
@@ -41,6 +46,10 @@ Component({
           if (this.data.samePageTypeId.includes(this.data.propItem.rcType)) {
             wx.navigateTo({
               url: `../devices/device21/device21?tid=${this.data.propItem.rcType}&deviceId=${this.data.propItem.deviceId}&mac=${this.data.propItem.mac}&rid=${this.data.propItem.rid}`,
+            })
+          } else if (this.data.samePageTypeId2.includes(this.data.propItem.rcType)) {
+            wx.navigateTo({
+              url: `../devices/device6/device6?tid=${this.data.propItem.rcType}&deviceId=${this.data.propItem.deviceId}&mac=${this.data.propItem.mac}&rid=${this.data.propItem.rid}`,
             })
           } else {
             wx.navigateTo({
