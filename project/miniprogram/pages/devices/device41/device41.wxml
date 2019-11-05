@@ -11,18 +11,20 @@
         data-key="{{item.value}}"
         bindtap="sendCode">{{item.text}}</view>
     </view>
-    <view class="light">
-      <view class="img" bindtap="sendCode" data-key="light">
-        <image data-key="light" src="../../../images/icons/light.png"></image>
-      </view>
+    <view class="timer">
+      <image bindtap="sendCode" data-key="timer-" class="btn-reduce" src="../../../images/blackIcon/reduce.png"></image>
+      <view>定时</view>
+      <image bindtap="sendCode" data-key="timer+" class="btn-plus" src="../../../images/blackIcon/plus.png"></image>
     </view>
-    <view class="hours">
+    <view class="funs">
       <view 
-        class="item"
+        class="item2"
         wx:for="{{list2}}" 
         wx:key="{{index}}" 
-        data-key="{{item.value}}"
-        bindtap="sendCode">{{item.text}}</view>
+        data-key="{{item}}"
+        bindtap="sendCode">
+        <image data-key="{{item}}" src="../../../images/icons/{{item}}.png"></image>
+      </view>
     </view>
   </view>
   <!-- 扩展键 -->
