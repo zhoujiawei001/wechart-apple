@@ -24,9 +24,18 @@ Page({
     app.sendCode(params, 'ctrl')
   },
   /**
+   * 动态设置当前页面的标题
+   */
+  setNavTitle: function (tid) {
+    wx.setNavigationBarTitle({
+      title: app.globalData.typeObj[tid] + '·遥控器'
+    })
+  },
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setNavTitle(options.tid);
     this.setData({
       devId: options.deviceId,
       rcType: options.tid,

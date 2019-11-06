@@ -32,9 +32,9 @@ Page({
         let msg = res.data.message;
         wx.stopPullDownRefresh();
         if (code === 0) {
+          let list = res.data.data;
           if (res.data.data.length > 0) {
             console.warn('我是老二');
-            let list = res.data.data;
             let bothwayList = list.filter(item => item.rcType === 7);
             let rid_arr = bothwayList.map(item => {
               return item.rid
@@ -50,16 +50,15 @@ Page({
               app.linkSocket();
             }
           } else {
+            this.setData({
+              d_list: list
+            })
             wx.showToast({
               title: '请添加设备',
               image: '../../images/warn.png'
             })
           }
         } else {
-          let list = res.data.data;
-          this.setData({
-            d_list: list
-          })
           wx.showToast({
             title: msg,
             image: '../../images/warn.png'

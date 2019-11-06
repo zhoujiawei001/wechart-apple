@@ -53,11 +53,11 @@ App({
     }
     if (JSON.stringify(options.referrerInfo) === '{}') {
       console.log('没有传入参数-onLaunch')
-      this.globalData.appId = '5f81a6fe262695784c4369a5b59d78d0'; // 5f81a6fe262695784c4369a5b59d78d0, b39aa9159d02cdfde0cc00ba2c01e0bf
-      this.globalData.macs = '84f3eb30f05d,,'; // 2462AB014FCA, DC4F22529BE4, 807D3A4BE4C8
-      this.globalData.token = 'oc4xO5VHIbq-iufQR182L0DLC4DM';
-      this.globalData.macArr = JSON.stringify(this.globalData.macs.split(','));
-      console.log('macArr', this.globalData.macArr);
+      // this.globalData.appId = '5f81a6fe262695784c4369a5b59d78d0'; // 5f81a6fe262695784c4369a5b59d78d0, b39aa9159d02cdfde0cc00ba2c01e0bf
+      // this.globalData.macs = '84f3eb30f05d,,'; // 2462AB014FCA, DC4F22529BE4, 807D3A4BE4C8
+      // this.globalData.token = 'oc4xO5VHIbq-iufQR182L0DLC4DM';
+      // this.globalData.macArr = JSON.stringify(this.globalData.macs.split(','));
+      // console.log('macArr', this.globalData.macArr);
       wx.showToast({
         title: '请传入参数',
         image: './images/warn.png'

@@ -29,8 +29,8 @@ Component({
       42: '风扇'
     },
     include_dev: [1,2,6,7,8,10,21,22,23,24,25,38,41,42], // 已开发设备遥控器类型
-    samePageTypeId: [21,22,23,25], // 相同
-    samePageTypeId2: [6, 8, 42]
+    samePageTypeId: [21,22,23,25], // 三马当先
+    samePageTypeId2: [6, 8, 42], // 一马当先
   },
 
   /**
