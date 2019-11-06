@@ -34,6 +34,22 @@ App({
       devList: [], // 设备列表
       bothwayDevRidArr: '', // 有双向通道的设备rc_id（暂时只有空调）
       isLinkSocket: 0, // 是否连接websocket 0-未连接， 1-已连接
+      typeObj: {
+        1: '机顶盒',
+        2: '电视机',
+        6: '风扇',
+        7: '空调',
+        8: '灯泡',
+        10: '电视盒子',
+        21: '开关',
+        22: '插座',
+        23: '窗帘',
+        24: '晾衣架',
+        25: '灯控器',
+        38: '风扇灯',
+        41: '凉霸',
+        42: '风扇'
+      }
     }
     if (JSON.stringify(options.referrerInfo) === '{}') {
       console.log('没有传入参数-onLaunch')
