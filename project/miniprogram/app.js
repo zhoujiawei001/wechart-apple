@@ -2,7 +2,6 @@
 import md5 from './utils/md5.js'
 App({
   onLaunch: function (options) {
-    this.lockReconnect = false
     this.limit = 0 // 重连次数
     this.timer = null // 重连定时器
     console.log('app.onLaunch', options.referrerInfo);
@@ -21,8 +20,8 @@ App({
     }
 
     this.globalData = {
-      // domain: 'https://mpapi.yaokantv.com',
-      domain: 'http://demo.yaokantv.com:8214',
+      domain: 'https://mpapi.yaokantv.com',
+      // domain: 'http://demo.yaokantv.com:8214',
       appId: '',
       macs: '',
       token: '',
@@ -33,7 +32,7 @@ App({
       macArr: [],
       devList: [], // 设备列表
       bothwayDevRidArr: '', // 有双向通道的设备rc_id（暂时只有空调）
-      isLinkSocket: 0, // 是否连接websocket 0-未连接， 1-已连接
+      lockReconnect: 0, // 是否连接websocket 0-未连接， 1-已连接
       typeObj: {
         1: '机顶盒',
         2: '电视机',
@@ -90,13 +89,13 @@ App({
     /**断线重连 */
     this.reconnect = () => {
       console.log('重连');
-      if (this.lockReconnect) return;
-      this.lockReconnect = true;
+      if (this.globalData.lockReconnect) return;
+      this.globalData.lockReconnect = 1;
       clearTimeout(this.timer);
       if (this.limit < 12) {
         this.timer = setTimeout(() => {
           this.linkSocket();
-          this.lockReconnect = false;
+          this.globalData.lockReconnect = 0;
         }, 5000);
         this.limit += 1;
       }

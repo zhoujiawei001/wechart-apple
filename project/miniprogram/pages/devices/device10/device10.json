@@ -4,5 +4,7 @@
   "navigationBarTextStyle": "black",
   "navigationBarTitleText": "盒子·遥控器",
   "backgroundColor": "#eeeeee",
-  "backgroundTextStyle": "light"
+  "backgroundTextStyle": "light",
+  "backgroundColorTop": "#F2F2F2",
+  "backgroundColorBottom": "#F2F2F2"
 }

@@ -1,12 +1,12 @@
-<view class="dev-item">
-  <view class="item-lf" bindtap="goToDevices">
+<view class="dev-item" bindtap="goToDevices">
+  <view class="item-lf">
     <image class="picture" src="../../images/devIcon/{{propItem.rcType}}.png"></image>
     <view class="info">
       <text>{{propItem.name}}</text>
       <text>{{typeObj[propItem.rcType]}}</text>
     </view>
   </view>
-  <view class="item-rt" bindtap="switchFn" hidden="{{propItem.rcType !== 7}}">
+  <view class="item-rt" catchtap="switchFn" hidden="{{propItem.rcType !== 7}}">
     <image class="sw-icon" src="../../images/switch_{{propItem.state.power || 0}}.png"></image>
   </view>
 </view>

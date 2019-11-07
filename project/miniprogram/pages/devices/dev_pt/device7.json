@@ -4,7 +4,7 @@
     "delay-box": "../../../components/delayBox/delayBox"
   },
   "enablePullDownRefresh": false,
-  "backgroundColorTop": "#e1e1e1",
+  "backgroundColorTop": "#F2F2F2",
   "backgroundColorBottom": "#F2F2F2",
   "navigationBarTitleText": "空调·遥控器"
 }

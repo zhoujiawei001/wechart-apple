@@ -48,6 +48,10 @@ Page({
             // 建立websocket连接 如果没有双向通道的就不需要连接
             if (rid_arr.length > 0) {
               app.linkSocket();
+              app.globalData.lockReconnect = 0
+            } else {
+              wx.closeSocket();
+              app.globalData.lockReconnect = 1
             }
           } else {
             this.setData({
@@ -59,6 +63,10 @@ Page({
             })
           }
         } else {
+          this.setData({
+            d_list: []
+          })
+          console.log('的撒范德萨发士大夫', msg)
           wx.showToast({
             title: msg,
             image: '../../images/warn.png'
@@ -132,15 +140,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getDevList();
-    this.getSceneList();
+    console.log('onLoad-index')
+    // this.getDevList();
+    // this.getSceneList();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    console.log('onReady-index')
+    this.getDevList();
+    this.getSceneList();
   },
 
   /**

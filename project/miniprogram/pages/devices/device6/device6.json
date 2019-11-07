@@ -6,5 +6,7 @@
   "navigationBarTextStyle": "black",
   "navigationBarTitleText": "风扇·遥控器",
   "backgroundColor": "#eeeeee",
-  "backgroundTextStyle": "light"
+  "backgroundTextStyle": "light",
+  "backgroundColorTop": "#F2F2F2",
+  "backgroundColorBottom": "#F2F2F2"
 }
