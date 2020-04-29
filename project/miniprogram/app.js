@@ -142,7 +142,7 @@ App({
         }
       })
     }
-    // this.linkSocket();
+    this.linkSocket();
     /**心跳对象 */
     this.heartCheck = {
       timeout: 30000,

@@ -106,6 +106,13 @@
 					"id": -1,
 					"name": "pages/devices/device38/device38",
 					"pathName": "pages/devices/device38/device38",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/devices/dev_pt/device7",
+					"pathName": "pages/devices/dev_pt/device7",
 					"scene": null
 				}
 			]

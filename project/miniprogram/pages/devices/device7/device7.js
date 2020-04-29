@@ -14,14 +14,14 @@ Page({
   data: {
     deviceId: '',
     supportMode: [0,1,2,3,4], // 空调所支持的模式
-    support: {
+    support: { // 空调所支持的功能
       speed: [0,1,2,3],
       temperature: [],
       windUd: 1,
       windLr: 1
     },
     modes: ['自动', '除湿', '送风', '制热', '制冷'],
-    speeds: ['自动', '低风', '中风', '高风'],
+    speeds: ['自动风', '低风', '中风', '高风'],
     devDetails: {}, // 设备详情
     devStatus: {
       power: 1,
@@ -255,11 +255,11 @@ Page({
         if (res.data.errorCode === 0) {
           this.setToOpenTimer(runtime);
         }
-        setTimeout(() => {
-          this.setData({
-            isShowDelayBox: false
-          })
-        }, 100)
+        // setTimeout(() => {
+        //   this.setData({
+        //     isShowDelayBox: false
+        //   })
+        // }, 100)
       },
       fail: err => {
         console.log(err);
@@ -289,11 +289,11 @@ Page({
         if (res.data.errorCode === 0) {
           this.setToOpenTimer(runtime);
         }
-        setTimeout(() => {
-          this.setData({
-            isShowDelayBox: false
-          })
-        }, 100)
+        // setTimeout(() => {
+        //   this.setData({
+        //     isShowDelayBox: false
+        //   })
+        // }, 100)
       },
       fail: err => {
         console.log(err);
